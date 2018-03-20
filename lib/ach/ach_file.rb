@@ -74,6 +74,17 @@ module ACH
       lines.join("\r\n")
     end
 
+    def summary_report #only includes debit and credit totals
+      to_s # To ensure correct records
+      lines = []
+      lines << left_justify("Debit Total: ", 25) +
+          sprintf("% 7d.%02d", @control.debit_total / 100, @control.debit_total % 100)
+      lines << left_justify("Credit Total: ", 25) +
+          sprintf("% 7d.%02d", @control.credit_total / 100, @control.credit_total % 100)
+
+      lines.join("\r\n")
+    end
+
     def parse_fixed data
       # replace with a space to preserve the record-lengths
       encoded_data = data.encode(Encoding.find('ASCII'),{:invalid => :replace, :undef => :replace, :replace => ' '})
