@@ -22,10 +22,10 @@ module ACH
       has_credits = false
 
       @entries.each do |e|
-        if e.debit?
+        if e.debit? && e.individual_name != 'OFFSET'  #added by mike, ensures reported totals do not include offset entry values.
           @control.debit_total += e.amount
           has_debits = true
-        else
+        elsif e.credit? && e.individual_name != 'OFFSET'
           @control.credit_total += e.amount
           has_credits = true
         end
