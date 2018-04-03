@@ -25,7 +25,7 @@ module ACH
         if e.debit? 
           @control.debit_total += e.amount
           has_debits = true
-        elsif e.credit? && e.individual_name != 'OFFSET'
+        elsif e.credit? 
           @control.credit_total += e.amount
           has_credits = true
         end
