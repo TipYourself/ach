@@ -74,13 +74,27 @@ module ACH
       lines.join("\r\n")
     end
 
-    def summary_report #only includes debit and credit totals
+    def summary_report #only includes debit and credit totals excludes offset values
       to_s # To ensure correct records
       lines = []
+
+      @summary_debit_total = 0
+      @summary_credit_total = 0
+
+      @batches.each do | batch |
+        batch.entries.each do | e |
+          if e.debit? && e.individual_name != 'OFFSET'
+            @summary_debit_total += e.amount
+          elsif e.credit? && e.individual_name != 'OFFSET'
+            @summary_credit_total += e.amount
+          end
+        end
+      end
+
       lines << left_justify("Debit Total: ", 25) +
-          sprintf("% 7d.%02d", @control.debit_total / 100, @control.debit_total % 100)
+          sprintf("% 7d.%02d", @summary_debit_total / 100, @summary_debit_total % 100)
       lines << left_justify("Credit Total: ", 25) +
-          sprintf("% 7d.%02d", @control.credit_total / 100, @control.credit_total % 100)
+          sprintf("% 7d.%02d", @summary_credit_total / 100, @summary_credit_total % 100)
 
       lines.join("\r\n")
     end

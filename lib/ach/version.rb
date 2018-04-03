@@ -1,3 +1,3 @@
 module ACH
-  VERSION = '0.5.15'.freeze #.15 added by Tip Yourself for customization
+  VERSION = '0.5.16'.freeze #.16 added by Tip Yourself for customization
 end
