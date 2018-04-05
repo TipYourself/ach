@@ -91,9 +91,14 @@ module ACH
         end
       end
 
+      lines << ""
       lines << left_justify("Debit Total: ", 25) +
-          sprintf("% 7d.%02d", @summary_debit_total / 100, @summary_debit_total % 100)
+          sprintf("% 7d.%02d", @control.debit_total / 100, @control.debit_total % 100)
       lines << left_justify("Credit Total: ", 25) +
+          sprintf("% 7d.%02d", @control.credit_total / 100, @control.credit_total % 100)
+      lines << left_justify("Transaction Debit Total: ", 25) +
+          sprintf("% 7d.%02d", @summary_debit_total / 100, @summary_debit_total % 100)
+      lines << left_justify("Transaction Credit Total: ", 25) +
           sprintf("% 7d.%02d", @summary_credit_total / 100, @summary_credit_total % 100)
 
       lines.join("\r\n")
